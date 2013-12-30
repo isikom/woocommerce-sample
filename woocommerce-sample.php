@@ -1,56 +1,77 @@
 <?php
 /**
- * Plugin Name: WooCommerce Smple
+ * Plugin Name: WooCommerce Sample
  * Plugin URI: http://www.isikom.net/
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.0.1
+ * Version: 0.0.2
  * License: GPLv2 or later
  */
+ 
 // Exit if accessed directly
 if (!defined('ABSPATH'))
   exit;
 
 //Checks if the WooCommerce plugins is installed and active.
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-  if (!class_exists('WooCommerce_Sample')) { 
+	if (!class_exists('WooCommerce_Sample')) {
+		class WooCommerce_Sample {
+		/**
+		 * Gets things started by adding an action to initialize this plugin once
+		 * WooCommerce is known to be active and initialized
+		 */
+		public function __construct() {
+			add_action('woocommerce_init', array(&$this, 'init'));
+		}
 
-    class WooCommerce_Sample {
+		/**
+		 * to add the necessary actions for the plugin
+		 */
+		public function init() {
+	        // backend stuff
+	        add_action('woocommerce_product_write_panel_tabs', array($this, 'product_write_panel_tab'));
+	        add_action('woocommerce_product_write_panels', array($this, 'product_write_panel'));
+	        add_action('woocommerce_process_product_meta', array($this, 'product_save_data'), 10, 2);
+	        // frontend stuff
+	        add_action('woocommerce_after_add_to_cart_form', array($this, 'product_sample_button'));      
+			// Prevent add to cart
+			add_filter('woocommerce_add_to_cart_validation', array( $this, 'add_to_cart' ), 40, 4 );
+			add_filter('woocommerce_add_cart_item_data', array( $this, 'add_sample_to_cart_item_data' ), 10, 3 );
+			add_filter('woocommerce_get_item_data', array( $this, 'add_item_data' ), 10, 2 );
+			add_filter('woocommerce_get_cart_item_from_session', array( $this, 'filter_session'), 10, 3);
+			add_filter('woocommerce_in_cart_product_title', array( $this, 'cart_title'), 10, 3);
+			add_filter('woocommerce_cart_item_quantity', array( $this, 'cart_item_quantity'), 10, 2);
+			add_filter('woocommerce_shipping_free_shipping_is_available', array( $this, 'enable_free_shipping'), 40, 1);
+			add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
+			// filter for Minimum/Maximum plugin override overriding
+			if (in_array('woocommerce-min-max-quantities/min-max-quantities.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+				add_filter('wcminmax_minimum_quantity', array($this, 'minimum_quantity'), 10, 3 );
+				add_filter('wcminmax_maximum_quantity', array($this, 'maximum_quantity'), 10, 3 );
+				add_filter('wcminmax_group_of_quantity', array($this, 'group_of_quantity'), 10, 3 );			
+			}
+		}
 
-     
-      /**
-       * Gets things started by adding an action to initialize this plugin once
-       * WooCommerce is known to be active and initialized
-       */
-      public function __construct() {
-        add_action('woocommerce_init', array(&$this, 'init'));
-      }
-
-      /**
-       * to add the necessary actions for the plugin
-       */
-      public function init() {
-        // backend stuff
-        add_action('woocommerce_product_write_panel_tabs', array($this, 'product_write_panel_tab'));
-        add_action('woocommerce_product_write_panels', array($this, 'product_write_panel'));
-        add_action('woocommerce_process_product_meta', array($this, 'product_save_data'), 10, 2);
-        // frontend stuff
-//        add_filter('woocommerce_product_tabs', array($this,'video_product_tabs'),25);
-//        add_action('woocommerce_product_tab_panels', array($this, 'video_product_tabs_panel'), 25);
-//        add_action('woocommerce_after_add_to_cart_button', array($this, 'product_sample_button'));
-        add_action('woocommerce_after_add_to_cart_form', array($this, 'product_sample_button'));      
-	// Prevent add to cart
-	add_filter('woocommerce_add_to_cart_validation', array( $this, 'add_to_cart' ), 40, 4 );
-	add_filter('woocommerce_add_cart_item_data', array( $this, 'add_sample_to_cart_item_data' ), 10, 3 );
-	add_filter('woocommerce_get_item_data', array( $this, 'add_item_data' ), 10, 2 );
-	add_filter('woocommerce_get_cart_item_from_session', array( $this, 'filter_session'), 10, 3);
-	add_filter('woocommerce_in_cart_product_title', array( $this, 'cart_title'), 10, 3);
-	add_filter('woocommerce_cart_item_quantity', array( $this, 'cart_item_quantity'), 10, 2);
-	add_filter('woocommerce_shipping_free_shipping_is_available', array( $this, 'enable_free_shipping'), 40, 1);
-	add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
-      }
+		// filter for Minimum/Maximum plugin overriding
+		function minimum_quantity($minimum_quantity, $cart_item_key, $values){
+			if ($values['sample'])
+				$minimum_quantity = 1;
+			return $minimum_quantity;
+		}
       
+		function maximum_quantity($maximum_quantity, $cart_item_key, $values){
+			if ($values['sample'])
+				$maximum_quantity = 1;
+			return $maximum_quantity;
+		}
+
+		function group_of_quantity($group_of_quantity, $cart_item_key, $values){
+			if ($values['sample'])
+				$group_of_quantity = 1;
+			return $group_of_quantity;
+		}
+		// end filter for Mimimum/Maximum plugin overriding
+
       function enable_free_shipping($is_available){
       	      $is_available = true;
       	      return $is_available;
@@ -60,6 +81,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       {
       	      //var_dump( $available_methods );
       	      // remove standard shipping option
+    	      // var_dump( get_option('active_plugins') );
+      	      
       	      if ( isset( $available_methods['free_shipping'] ) AND isset( $available_methods['flat_rate'] ) )
       	      	      unset( $available_methods['flat_rate'] );
       	      return $available_methods;
@@ -162,25 +185,59 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         echo "<li><a class='added_sample' href=\"#sample_tab\">" . __('Sample','woo_sample') . "</a></li>";
       }
 
-      /**
-       * build the panel for the administrator.
-       */
-      public function product_write_panel() {
-        global $post;
-
-        // Pull the video tab data out of the database
-           if (empty($tab_data)) {
-             $tab_data = '';
-           }
-           ?>
-           <div id="sample_tab" class="panel woocommerce_options_panel">
-           <p class="form-field sample_enamble_field ">
-           <label for="sample_enamble"><?php _e('Enable sample', 'woo_sample');?></label>
-           <input type="checkbox" class="checkbox" name="sample_enamble" id="sample_enamble" value="yes" <?php if (get_post_meta($post->ID, 'sample_enamble', true)) { echo 'checked="checked"'; } ?>> <span class="description"><?php _e('Enable or disable sample option for this item.', 'woo_sample'); ?></span></p>
-           <?php
-           //$this->wo_di_form_admin_video(array('id' => '_tab_video', 'label' => __('Embed Code','woo_sample'), 'placeholder' => __('Place your embedded video code here.','woo_sample'), 'style' => 'width:70%;height:21.5em;'));
-           echo '</div>';
-      }
+		/**
+		 * build the panel for the administrator.
+		 */
+		public function product_write_panel() {
+        	global $post;
+			$sample_enable = get_post_meta($post->ID, 'sample_enamble', true) ? get_post_meta($post->ID, 'sample_enamble', true) : false;
+			$sample_shipping_mode = get_post_meta($post->ID, 'sample_shipping_mode', true) ? get_post_meta($post->ID, 'sample_shipping_mode', true) : 'default';
+			$sample_shipping = get_post_meta($post->ID, 'sample_shiping', true) ? get_post_meta($post->ID, 'sample_shipping', true) : 0;
+			$sample_price_mode = get_post_meta($post->ID, 'sample_price_mode', true) ? get_post_meta($post->ID, 'sample_price_mode', true) : 'default';
+			$sample_price = get_post_meta($post->ID, 'sample_price', true) ? get_post_meta($post->ID, 'sample_price', true) : 0;
+			?>
+			<div id="sample_tab" class="panel woocommerce_options_panel">
+				<p class="form-field sample_enamble_field ">
+					<label for="sample_enamble"><?php _e('Enable sample', 'woo_sample');?></label>
+					<input type="checkbox" class="checkbox" name="sample_enamble" id="sample_enamble" value="yes" <?php echo $sample_enable ? 'checked="checked"' : ''; ?>> <span class="description"><?php _e('Enable or disable sample option for this item.', 'woo_sample'); ?></span>
+				</p>
+				<legend><?php _e('Sample Shipping', 'woo_sample'); ?></legend>
+				<div class="options_group">
+					<input class="radio" id="sample_shipping_default" type="radio" value="default" name="sample_shipping_mode" <?php echo $sample_shipping_mode == 'default' ? 'checked="checked"' : ''; ?>>
+					<label class="radio" for="sample_shipping_default"><?php _e('use default product shipping methods', 'woo_sample'); ?></label>
+				</div>
+				<div class="options_group">
+					<input class="radio" id="sample_shipping_free" type="radio" value="free" name="sample_shipping_mode" <?php echo $sample_shipping_mode == 'free' ? 'checked="checked"' : ''; ?>>
+					<label class="radio" for="sample_shipping_free"><?php _e('free shipping for sample', 'woo_sample'); ?></label>
+				</div>
+				<div class="options_group">
+					<input class="radio" id="sample_shipping_custom" type="radio" value="custom" name="sample_shipping_mode" <?php echo $sample_shipping_mode == 'custom' ? 'checked="checked"' : ''; ?>>
+					<label class="radio" for="sample_shipping_custom"><?php _e('custom fee shipping', 'woo_sample'); ?></label>
+					<p class="form-field sample_shipping_field clear">
+						<label for="sample_shipping"><?php _e('set shipping fee', 'woo_sample'); ?></label>
+						<input type="number" class="wc_input_price short" name="sample_shipping" id="sample_shipping" value="<?php echo $sample_shipping; ?>" step="any" min="0">
+					</p>
+				</div>
+				<legend><?php _e('Sample price', 'woo_sample'); ?></legend>
+				<div class="options_group">
+					<input class="radio" id="sample_price_default" type="radio" value="default" name="sample_price_mode" <?php echo $sample_price_mode == 'default' ? 'checked="checked"' : ''; ?>>
+					<label class="radio" for="sample_price_default"><?php _e('product default price', 'woo_sample'); ?></label>
+				</div>
+				<div class="options_group">
+					<input class="radio" id="sample_price_free" type="radio" value="free" name="sample_price_mode" <?php echo $sample_price_mode == 'free' ? 'checked="checked"' : ''; ?>>
+					<label class="radio" for="sample_price_free"><?php _e('free', 'woo_sample'); ?></label>
+				</div>
+				<div class="options_group">
+					<input class="radio" id="sample_price_custom" type="radio" value="custom" name="sample_price_mode" <?php echo $sample_price_mode == 'custom' ? 'checked="checked"' : ''; ?>>
+					<label class="radio" for="sample_price_custom"><?php _e('custom price', 'woo_sample'); ?></label>
+					<p class="form-field sample_price_field clear">
+						<label for="sample_price"><?php _e('set sample price', 'woo_sample'); ?></label>
+						<input type="number" class="wc_input_price short" name="sample_price" id="sample_price" value="<?php echo $sample_price; ?>" step="any" min="0">
+					</p>
+				</div>
+			</div>
+			<?php
+		}
 
       /*
        * build form to the administrator.
