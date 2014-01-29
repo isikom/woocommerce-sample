@@ -265,24 +265,24 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         
       }
 
-      public function product_sample_button() {
-      	     global $post, $product;
-      	     $is_sample = get_post_meta($post->ID, 'sample_enamble');
-      	     if ($is_sample){
-      	      ?>
-      	      <?php do_action('woocommerce_before_add_sample_to_cart_form'); ?>
-      	      <form action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="cart sample" method="post" enctype='multipart/form-data'>
-	 	<?php do_action('woocommerce_before_add_sample_to_cart_button'); ?>
-      	      
-      	      	<button type="submit" class="single_add_to_cart_button button alt single_add_sample_to_cart_button"><?php echo  __( 'Add Sample to cart', 'woo_sample' ); ?></button>
-      	        <input type="hidden" name="sample" id="sample" value="true"/>
-
-	 	<?php do_action('woocommerce_after_add_sample_to_cart_button'); ?>
-	      </form>
-	      <?php do_action('woocommerce_after_add_sample_to_cart_form'); ?>
-      	      <?php
-      	     }
-      }
+		public function product_sample_button() {
+			global $post, $product;
+			$is_sample = get_post_meta($post->ID, 'sample_enamble');
+			if ($is_sample){
+			?>
+				<?php do_action('woocommerce_before_add_sample_to_cart_form'); ?>
+				<form action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="cart sample" method="post" enctype='multipart/form-data'>
+				<?php do_action('woocommerce_before_add_sample_to_cart_button'); ?>
+					<div class="single_variation_wrap" style="">      	      
+	      	      	<button type="submit" class="single_add_to_cart_button button alt single_add_sample_to_cart_button"><?php echo  __( 'Add Sample to cart', 'woo_sample' ); ?></button>
+	      	        <input type="hidden" name="sample" id="sample" value="true"/>
+	      	        </div>
+				<?php do_action('woocommerce_after_add_sample_to_cart_button'); ?>
+				</form>
+				<?php do_action('woocommerce_after_add_sample_to_cart_form'); ?>
+			<?php
+			}
+		}
 	  
 		function enqueue_scripts() {
 			global $pagenow, $wp_scripts;
