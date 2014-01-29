@@ -35,6 +35,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	        add_action('woocommerce_process_product_meta', array($this, 'product_save_data'), 10, 2);
 	        // frontend stuff
 	        add_action('woocommerce_after_add_to_cart_form', array($this, 'product_sample_button'));      
+			add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 			// Prevent add to cart
 			add_filter('woocommerce_add_to_cart_validation', array( $this, 'add_to_cart' ), 40, 4 );
 			add_filter('woocommerce_add_cart_item_data', array( $this, 'add_sample_to_cart_item_data' ), 10, 3 );
@@ -282,6 +283,20 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       	      <?php
       	     }
       }
+	  
+		function enqueue_scripts() {
+			global $pagenow, $wp_scripts;
+			$plugin_url = untrailingslashit(plugin_dir_url(__FILE__));
+			if ( ! is_admin() ) {
+				wp_enqueue_script('woocommerce-sample', $plugin_url . '/js/woocommerce-sample.js', array('jquery'), '1.0', true);
+			}
+			/*
+			if (is_admin() && ( $pagenow == 'post-new.php' || $pagenow == 'post.php' || $pagenow == 'edit.php' || 'edit-tags.php')) {
+				// for admin enqueue
+			}
+			*/
+		}
+	  
       
     }//end of the class  
   }//end of the if, if the class exists
