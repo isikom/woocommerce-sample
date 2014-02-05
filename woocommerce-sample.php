@@ -47,9 +47,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
 			// filter for Minimum/Maximum plugin override overriding
 			if (in_array('woocommerce-min-max-quantities/min-max-quantities.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-				add_filter('wcminmax_minimum_quantity', array($this, 'minimum_quantity'), 10, 3 );
-				add_filter('wcminmax_maximum_quantity', array($this, 'maximum_quantity'), 10, 3 );
-				add_filter('wcminmax_group_of_quantity', array($this, 'group_of_quantity'), 10, 3 );			
+				add_filter('wc_min_max_quantity_minimum_allowed_quantity', array($this, 'minimum_quantity'), 10, 3 );
+				add_filter('wc_min_max_quantity_maximum_allowed_quantity', array($this, 'maximum_quantity'), 10, 3 );
+				add_filter('wc_min_max_quantity_group_of_quantity', array($this, 'group_of_quantity'), 10, 3 );			
 			}
 		}
 
@@ -180,7 +180,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	return $pass;
       }
       /**
-       * creates the tab for the administrator, where administered product videos.
+       * creates the tab for the administrator, where administered product sample.
        */
       public function product_write_panel_tab() {
         echo "<li><a class='added_sample' href=\"#sample_tab\">" . __('Sample','woo_sample') . "</a></li>";
@@ -333,7 +333,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   function woosample_add_scripts() {
     // Respects SSL, style-admin.css is relative to the current file
     wp_register_style( 'woosample-styles', plugins_url('css/style-admin.css', __FILE__) );
-    wp_register_script( 'woosample-scripts', plugins_url('js/js-script.js', __FILE__), array('jquery') );
+    wp_register_script( 'woosample-scripts', plugins_url('js/wcommerce-sample.js', __FILE__), array('jquery') );
     wp_enqueue_style( 'woosample-styles' );
     wp_enqueue_script( 'woosample-scripts' );
   }
