@@ -333,7 +333,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   function woosample_add_scripts() {
     // Respects SSL, style-admin.css is relative to the current file
     wp_register_style( 'woosample-styles', plugins_url('css/style-admin.css', __FILE__) );
-    wp_register_script( 'woosample-scripts', plugins_url('js/wcommerce-sample.js', __FILE__), array('jquery') );
+    wp_register_script( 'woosample-scripts', plugins_url('js/woocommerce-sample.js', __FILE__), array('jquery') );
     wp_enqueue_style( 'woosample-styles' );
     wp_enqueue_script( 'woosample-scripts' );
   }
