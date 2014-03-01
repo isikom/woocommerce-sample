@@ -5,7 +5,7 @@
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.0.2
+ * Version: 0.4.1
  * License: GPLv2 or later
  */
  

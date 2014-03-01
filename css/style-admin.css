@@ -1,6 +1,29 @@
 #woocommerce-product-data ul.product_data_tabs li a.added_sample{
-   background: url(../images/sample-icon.png) no-repeat 6px 5px transparent;
-   line-height:1em;
-   padding:5px 5px 5px 28px;
-   text-shadow:0 1px 1px #FFFFFF;
+ 	background: url(../images/sample-icon.png) no-repeat 6px 5px transparent;
+ 	line-height:1em;
+	padding:5px 5px 5px 28px;
+	text-shadow:0 1px 1px #FFFFFF;
+}
+
+input.radio {
+	width: auto !important;
+	margin: 4px 7px !important;
+}
+
+label.radio {
+	float: none !important;
+	font-size: 12px;
+	line-height: 24px;
+}
+
+#sample_tab legend {
+	display: inline-block;
+	float: none !important;
+	width: 100% !important;
+	font-size: 12px;
+	line-height: 24px;	
+}
+
+#sample_tab .options_group {
+	clear: both;
 }

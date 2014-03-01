@@ -3,7 +3,7 @@ Contributors: isikom, zauker
 Tags: ecommerce, e-commerce, commerce, woothemes, wordpress ecommerce, woocommerce, sample, free sample
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 2.0.20
+Stable tag: 0.4.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,10 @@ The manual installation method involves downloading our plugin and uploading it 
 3. Activate the plugin from the Plugins menu within the WordPress admin.
 
 == Changelog ==
+
+= 0.4.1 - 01/03/2014 =
+* Fix Min/Max filters.
+* Fix CSS for tab
 
 = 0.4 - 24/02/2014 =
 * Initial Alpha Release.
