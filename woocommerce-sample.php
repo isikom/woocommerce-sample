@@ -47,26 +47,26 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
 			// filter for Minimum/Maximum plugin override overriding
 			if (in_array('woocommerce-min-max-quantities/min-max-quantities.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-				add_filter('wc_min_max_quantity_minimum_allowed_quantity', array($this, 'minimum_quantity'), 10, 3 );
-				add_filter('wc_min_max_quantity_maximum_allowed_quantity', array($this, 'maximum_quantity'), 10, 3 );
-				add_filter('wc_min_max_quantity_group_of_quantity', array($this, 'group_of_quantity'), 10, 3 );			
+				add_filter('wc_min_max_quantity_minimum_allowed_quantity', array($this, 'minimum_quantity'), 10, 4 );
+				add_filter('wc_min_max_quantity_maximum_allowed_quantity', array($this, 'maximum_quantity'), 10, 4 );
+				add_filter('wc_min_max_quantity_group_of_quantity', array($this, 'group_of_quantity'), 10, 4 );			
 			}
 		}
 
 		// filter for Minimum/Maximum plugin overriding
-		function minimum_quantity($minimum_quantity, $cart_item_key, $values){
+		function minimum_quantity($minimum_quantity, $checking_id, $cart_item_key, $values){
 			if ($values['sample'])
 				$minimum_quantity = 1;
 			return $minimum_quantity;
 		}
       
-		function maximum_quantity($maximum_quantity, $cart_item_key, $values){
+		function maximum_quantity($maximum_quantity, $checking_id, $cart_item_key, $values){
 			if ($values['sample'])
 				$maximum_quantity = 1;
 			return $maximum_quantity;
 		}
 
-		function group_of_quantity($group_of_quantity, $cart_item_key, $values){
+		function group_of_quantity($group_of_quantity, $checking_id, $cart_item_key, $values){
 			if ($values['sample'])
 				$group_of_quantity = 1;
 			return $group_of_quantity;
@@ -132,14 +132,21 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       }
       
       function add_sample_to_cart_item_data ($cart_item_data, $product_id, $variation_id){
-      	      error_log("add_sample_to_cart_item_data");
+      	      error_log("##################################################################################");
+      	      error_log("########################## add_sample_to_cart_item_data ##########################");
       	      error_log(serialize($cart_item_data));
+      	      error_log("##################################################################################");
       	      if (get_post_meta($product_id, 'sample_enamble') && $_REQUEST['sample']){
-      	      	      $cart_item_data['sample'] = true;
-      	      	      $cart_item_data['unique_key'] = md5($product_id . 'sample');
+      	      		error_log('is a sample');
+					$cart_item_data['sample'] = true;
+					$cart_item_data['unique_key'] = md5($product_id . 'sample');
+      	      }else{
+      	      		error_log('is not a sample');
       	      }
+      	      error_log("##################################################################################");
       	      error_log(serialize($cart_item_data));
-      	      error_log("//add_sample_to_cart_item_data");
+      	      error_log("##################################################################################");
+      	      error_log("##################################################################################");
       	      return $cart_item_data;
       }
       
