@@ -5,7 +5,7 @@
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.4.1
+ * Version: 0.5.0
  * License: GPLv2 or later
  */
  
@@ -103,7 +103,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       
       function cart_title($title, $values, $cart_item_key){
       	      if ($values['sample']){
-      	      	      $title .= ' [' . __('Sample','woo_sample') . '] ';
+      	      	      $title .= ' [' . __('Sample','woosample') . '] ';
       	      }
       	      return $title;
       }
@@ -173,11 +173,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			
 			foreach ($cart_items as $cart_id_key => $cart_item){
 				if ($cart_item['unique_key'] == $unique_key){
-					$woocommerce->add_error( __( 'A sample of the same product is already present into your cart', 'woo_sample' ) );
+					$woocommerce->add_error( __( 'A sample of the same product is already present into your cart', 'woosample' ) );
 					return false;
 				}
 				if ($cart_item['product_id'] == $product_id){
-					$woocommerce->add_error( __( 'You have already added this product on your cart, you can\'t add a sample of the same item', 'woo_sample' ) );
+					$woocommerce->add_error( __( 'You have already added this product on your cart, you can\'t add a sample of the same item', 'woosample' ) );
 					return false;
 				}
 			}
@@ -190,7 +190,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        * creates the tab for the administrator, where administered product sample.
        */
       public function product_write_panel_tab() {
-        echo "<li><a class='added_sample' href=\"#sample_tab\">" . __('Sample','woo_sample') . "</a></li>";
+        echo "<li><a class='added_sample' href=\"#sample_tab\">" . __('Sample','woosample') . "</a></li>";
       }
 
 		/**
@@ -206,40 +206,40 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			?>
 			<div id="sample_tab" class="panel woocommerce_options_panel">
 				<p class="form-field sample_enamble_field ">
-					<label for="sample_enamble"><?php _e('Enable sample', 'woo_sample');?></label>
-					<input type="checkbox" class="checkbox" name="sample_enamble" id="sample_enamble" value="yes" <?php echo $sample_enable ? 'checked="checked"' : ''; ?>> <span class="description"><?php _e('Enable or disable sample option for this item.', 'woo_sample'); ?></span>
+					<label for="sample_enamble"><?php _e('Enable sample', 'woosample');?></label>
+					<input type="checkbox" class="checkbox" name="sample_enamble" id="sample_enamble" value="yes" <?php echo $sample_enable ? 'checked="checked"' : ''; ?>> <span class="description"><?php _e('Enable or disable sample option for this item.', 'woosample'); ?></span>
 				</p>
-				<legend><?php _e('Sample Shipping', 'woo_sample'); ?></legend>
+				<legend><?php _e('Sample Shipping', 'woosample'); ?></legend>
 				<div class="options_group">
 					<input class="radio" id="sample_shipping_default" type="radio" value="default" name="sample_shipping_mode" <?php echo $sample_shipping_mode == 'default' ? 'checked="checked"' : ''; ?>>
-					<label class="radio" for="sample_shipping_default"><?php _e('use default product shipping methods', 'woo_sample'); ?></label>
+					<label class="radio" for="sample_shipping_default"><?php _e('use default product shipping methods', 'woosample'); ?></label>
 				</div>
 				<div class="options_group">
 					<input class="radio" id="sample_shipping_free" type="radio" value="free" name="sample_shipping_mode" <?php echo $sample_shipping_mode == 'free' ? 'checked="checked"' : ''; ?>>
-					<label class="radio" for="sample_shipping_free"><?php _e('free shipping for sample', 'woo_sample'); ?></label>
+					<label class="radio" for="sample_shipping_free"><?php _e('free shipping for sample', 'woosample'); ?></label>
 				</div>
 				<div class="options_group">
 					<input class="radio" id="sample_shipping_custom" type="radio" value="custom" name="sample_shipping_mode" <?php echo $sample_shipping_mode == 'custom' ? 'checked="checked"' : ''; ?>>
-					<label class="radio" for="sample_shipping_custom"><?php _e('custom fee shipping', 'woo_sample'); ?></label>
+					<label class="radio" for="sample_shipping_custom"><?php _e('custom fee shipping', 'woosample'); ?></label>
 					<p class="form-field sample_shipping_field clear">
-						<label for="sample_shipping"><?php _e('set shipping fee', 'woo_sample'); ?></label>
+						<label for="sample_shipping"><?php _e('set shipping fee', 'woosample'); ?></label>
 						<input type="number" class="wc_input_price short" name="sample_shipping" id="sample_shipping" value="<?php echo $sample_shipping; ?>" step="any" min="0">
 					</p>
 				</div>
-				<legend><?php _e('Sample price', 'woo_sample'); ?></legend>
+				<legend><?php _e('Sample price', 'woosample'); ?></legend>
 				<div class="options_group">
 					<input class="radio" id="sample_price_default" type="radio" value="default" name="sample_price_mode" <?php echo $sample_price_mode == 'default' ? 'checked="checked"' : ''; ?>>
-					<label class="radio" for="sample_price_default"><?php _e('product default price', 'woo_sample'); ?></label>
+					<label class="radio" for="sample_price_default"><?php _e('product default price', 'woosample'); ?></label>
 				</div>
 				<div class="options_group">
 					<input class="radio" id="sample_price_free" type="radio" value="free" name="sample_price_mode" <?php echo $sample_price_mode == 'free' ? 'checked="checked"' : ''; ?>>
-					<label class="radio" for="sample_price_free"><?php _e('free', 'woo_sample'); ?></label>
+					<label class="radio" for="sample_price_free"><?php _e('free', 'woosample'); ?></label>
 				</div>
 				<div class="options_group">
 					<input class="radio" id="sample_price_custom" type="radio" value="custom" name="sample_price_mode" <?php echo $sample_price_mode == 'custom' ? 'checked="checked"' : ''; ?>>
-					<label class="radio" for="sample_price_custom"><?php _e('custom price', 'woo_sample'); ?></label>
+					<label class="radio" for="sample_price_custom"><?php _e('custom price', 'woosample'); ?></label>
 					<p class="form-field sample_price_field clear">
-						<label for="sample_price"><?php _e('set sample price', 'woo_sample'); ?></label>
+						<label for="sample_price"><?php _e('set sample price', 'woosample'); ?></label>
 						<input type="number" class="wc_input_price short" name="sample_price" id="sample_price" value="<?php echo $sample_price; ?>" step="any" min="0">
 					</p>
 				</div>
@@ -281,7 +281,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				<form action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="cart sample" method="post" enctype='multipart/form-data'>
 				<?php do_action('woocommerce_before_add_sample_to_cart_button'); ?>
 					<div class="single_variation_wrap" style="">      	      
-	      	      	<button type="submit" class="single_add_to_cart_button button alt single_add_sample_to_cart_button"><?php echo  __( 'Add Sample to cart', 'woo_sample' ); ?></button>
+	      	      	<button type="submit" class="single_add_to_cart_button button alt single_add_sample_to_cart_button"><?php echo  __( 'Add Sample to cart', 'woosample' ); ?></button>
 	      	        <input type="hidden" name="sample" id="sample" value="true"/>
 	      	        </div>
 				<?php do_action('woocommerce_after_add_sample_to_cart_button'); ?>
@@ -313,14 +313,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
    */
   $woocommerce_sample_tab = new WooCommerce_Sample();
 
-  //agrego el contexto a la url
-  function woosample_add_my_context_to_url($url, $type) {
-    if (isset($_REQUEST['context'])) {
-      $url = add_query_arg('context', $_REQUEST['context'], $url);
-    }
-    return $url;
-  }
-
   $plugin = plugin_basename( __FILE__ );
 
 } else {//end if,if installed woocommerce
@@ -329,7 +321,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   function woosample_tab_error_notice() {
     global $current_screen;
     if ($current_screen->parent_base == 'plugins') {
-      echo '<div class="error"><p>' . __('WooCommerce Sample requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> to be activated in order to work. Please install and activate <a href="' . admin_url('plugin-install.php?tab=search&type=term&s=WooCommerce') . '" target="_blank">WooCommerce</a> first.','woo_sample') . '</p></div>';
+      echo '<div class="error"><p>' . sprintf(__('WooCommerce Sample requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> to be activated in order to work. Please install and activate <a href="%1$s" target="_blank">WooCommerce</a> first.','woosample'), admin_url('plugin-install.php?tab=search&type=term&s=WooCommerce') ) . '</p></div>';
     }
   }
 }
@@ -350,7 +342,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   * Set up localization
   */
   function woosample_textdomain() {
-    load_plugin_textdomain( 'woosample', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    load_plugin_textdomain( 'woosample', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
   }
   add_action('plugins_loaded', 'woosample_textdomain');
 

@@ -1,0 +1,97 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Sample\n"
+"POT-Creation-Date: 2014-03-02 19:14+0100\n"
+"PO-Revision-Date: 2014-03-02 19:16+0100\n"
+"Last-Translator: Michele Menciassi <m.menciassi@gmail.com>\n"
+"Language-Team: ISIKOM <info@isikom.net>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../woocommerce-sample.php:106 ../woocommerce-sample.php:193
+msgid "Sample"
+msgstr "Campione"
+
+#: ../woocommerce-sample.php:176
+msgid "A sample of the same product is already present into your cart"
+msgstr "Un campione dello stesso prodotto è già presente nel tuo carrello"
+
+#: ../woocommerce-sample.php:180
+msgid ""
+"You have already added this product on your cart, you can't add a sample of "
+"the same item"
+msgstr ""
+"Hai già aggiunto questo prodotto al tuo carrello, non puoi richiedere un "
+"campione dello stesso articolo"
+
+#: ../woocommerce-sample.php:209
+msgid "Enable sample"
+msgstr "Abilita il Campione"
+
+#: ../woocommerce-sample.php:210
+msgid "Enable or disable sample option for this item."
+msgstr "Abilita o disabilita le opzioni per il campione per questo articolo"
+
+#: ../woocommerce-sample.php:212
+msgid "Sample Shipping"
+msgstr "Trasporto del Campione"
+
+#: ../woocommerce-sample.php:215
+msgid "use default product shipping methods"
+msgstr "usa il metodo di trasporto impostato per il prodotto"
+
+#: ../woocommerce-sample.php:219
+msgid "free shipping for sample"
+msgstr "trasporto gratuito per il campione"
+
+#: ../woocommerce-sample.php:223
+msgid "custom fee shipping"
+msgstr "spese di trasporto personalizzate"
+
+#: ../woocommerce-sample.php:225
+msgid "set shipping fee"
+msgstr "imposta le spese di trasporto"
+
+#: ../woocommerce-sample.php:229
+msgid "Sample price"
+msgstr "Prezzo del Campione"
+
+#: ../woocommerce-sample.php:232
+msgid "product default price"
+msgstr "prezzo impostato nel prodotto"
+
+#: ../woocommerce-sample.php:236
+msgid "free"
+msgstr "gratuito"
+
+#: ../woocommerce-sample.php:240
+msgid "custom price"
+msgstr "prezzo personalizzato"
+
+#: ../woocommerce-sample.php:242
+msgid "set sample price"
+msgstr "imposta il prezzo del campione"
+
+#: ../woocommerce-sample.php:284
+msgid "Add Sample to cart"
+msgstr "Richiedi un Campione"
+
+#: ../woocommerce-sample.php:332
+#, php-format
+msgid ""
+"WooCommerce Sample requires <a href=\"http://www.woothemes.com/woocommerce/"
+"\" target=\"_blank\">WooCommerce</a> to be activated in order to work. "
+"Please install and activate <a href=\"%1$s\" target=\"_blank\">WooCommerce</"
+"a> first."
+msgstr ""
+"WooCommerce Sample richiede che <a href=\"http://www.woothemes.com/"
+"woocommerce/\" target=\"_blank\">WooCommerce</a> sia attivato per poter "
+"funzionare. Ti preghiamo di installare ed attivare prima <a href=\"%1$s\" "
+"target=\"_blank\">WooCommerce</a>."

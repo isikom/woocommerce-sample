@@ -14,6 +14,7 @@ label.radio {
 	float: none !important;
 	font-size: 12px;
 	line-height: 24px;
+	margin: 0 !important;
 }
 
 #sample_tab legend {
@@ -22,6 +23,7 @@ label.radio {
 	width: 100% !important;
 	font-size: 12px;
 	line-height: 24px;	
+	margin: 0 10px !important;
 }
 
 #sample_tab .options_group {
