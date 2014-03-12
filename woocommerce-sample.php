@@ -36,12 +36,16 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	        // frontend stuff
 	        add_action('woocommerce_after_add_to_cart_form', array($this, 'product_sample_button'));      
 			add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+			//add_action('woocommerce_add_to_cart', $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data );
+			//do_action( 'woocommerce_add_to_cart', $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data );
 			// Prevent add to cart
-			add_filter('woocommerce_add_to_cart_validation', array( $this, 'add_to_cart' ), 40, 4 );
+			add_filter('woocommerce_add_to_cart_validation', array( $this, 'add_to_cart_validation' ), 40, 4 );
 			add_filter('woocommerce_add_cart_item_data', array( $this, 'add_sample_to_cart_item_data' ), 10, 3 );
-			add_filter('woocommerce_get_item_data', array( $this, 'add_item_data' ), 10, 2 );
+			add_filter('woocommerce_add_cart_item', array( $this, 'add_sample_to_cart_item' ), 10, 2 );
+			add_filter('woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
 			add_filter('woocommerce_get_cart_item_from_session', array( $this, 'filter_session'), 10, 3);
 			add_filter('woocommerce_in_cart_product_title', array( $this, 'cart_title'), 10, 3);
+			add_filter('woocommerce_cart_widget_product_title', array( $this, 'cart_widget_product_title'), 10, 2);
 			add_filter('woocommerce_cart_item_quantity', array( $this, 'cart_item_quantity'), 10, 2);
 			add_filter('woocommerce_shipping_free_shipping_is_available', array( $this, 'enable_free_shipping'), 40, 1);
 			add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
@@ -107,27 +111,55 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       	      }
       	      return $title;
       }
+	  
+      function cart_widget_product_title($title, $cart_item){
+			if (is_array($cart_item) && $cart_item['sample']){
+				$title .= ' [' . __('Sample','woosample') . '] ';
+			}
+			return $title;
+	  }
       
       function filter_session($cart_content, $value, $key){
       	      if ($value['sample']){
       	      	      $cart_content['sample'] = true;
       	      	      $cart_content['unique_key'] = $value['unique_key'];
+      	      	      //$cart_content['data']->price = 0;
+					  $product_id = $cart_content['product_id'];
+					  $sample_price_mode = get_post_meta($product_id, 'sample_price_mode', true) ? get_post_meta($product_id, 'sample_price_mode', true) : 'default';
+					  $sample_price = get_post_meta($product_id, 'sample_price', true) ? get_post_meta($product_id, 'sample_price', true) : 0;
+					  if ($sample_price_mode === 'custom'){
+					  	$cart_content['data']->price = $sample_price;
+					  }else if ($sample_price_mode === 'free'){
+					  	$cart_content['data']->price = 0;
+					  }else{
+					  	//default
+					  }
       	      }
       	      return $cart_content;
       }
       
-      function add_item_data($item_data, $cart_item){
+      function get_item_data($item_data, $cart_item){
       	      global $cart_item_key;
       	      
-      	      error_log("add_item_data");
+      	      error_log("#################### get_item_data ####################");
       	      error_log(serialize($cart_item_key));
+			  error_log("#######################################################");
       	      error_log(serialize($item_data));
+			  error_log("#######################################################");
       	      error_log(serialize($cart_item));
+			  error_log("#######################################################");
       	      if ($cart_item['sample']){
       	      	      error_log('SAMPLE TRUE');
       	      }else{
       	      	      error_log('SAMPLE FALSE');
       	      }
+			  error_log("#######################################################");
+			  error_log(serialize($cart_item['data']));
+			  error_log("#######################################################");
+			  error_log("PRICE " . $cart_item['data']->price);
+			  error_log("REGULAR PRICE " . $cart_item['data']->regular_price);
+			  error_log("SALE PRICE " . $cart_item['data']->sale_price);
+			  error_log("#######################################################");
       	      return $item_data;
       }
       
@@ -149,9 +181,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       	      error_log("##################################################################################");
       	      return $cart_item_data;
       }
-      
+
+	function add_sample_to_cart_item ($cart_item, $cart_item_key){
+		error_log("++++++++++++++++++++++++++++ add_sample_to_cart_item +++++++++++++++++++++++++++++");
+		if ($cart_item['sample'] === true){
+			error_log('e\' un campione');
+			error_log("PRICE " . $cart_item['data']->price);
+			$cart_item['data']->price = 0;
+		}else{
+			error_log('non e\' un campione');
+		}
+		error_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		return $cart_item;
+	}
+	  
       /**
-       * add_to_cart function.
+       * add_to_cart_validation function.
        *
        * @access public
        * @param mixed $pass
@@ -159,7 +204,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        * @param mixed $quantity
        * @return void
        */
-      function add_to_cart( $pass, $product_id, $quantity, $variation_id = 0 ) {
+      function add_to_cart_validation( $pass, $product_id, $quantity, $variation_id = 0 ) {
 	global $woocommerce;
 	
 	// se ci sono articoli nel carrello eseguiamo i controlli altrimenti se il carrello è vuoto aggiungiamo l'elemento senza controlli ulteriori
@@ -263,6 +308,15 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }else{
           update_post_meta($post_id, 'sample_enamble', true);
         }
+		
+		$sample_price_mode = $_POST['sample_price_mode'];
+        update_post_meta($post_id, 'sample_price_mode', $sample_price_mode);
+		$sample_price = $_POST['sample_price'];
+        update_post_meta($post_id, 'sample_price', $sample_price);
+		$sample_shipping_mode = $_POST['sample_shipping_mode'];
+        update_post_meta($post_id, 'sample_shipping_mode', $sample_shipping_mode);
+		$sample_shipping = $_POST['sample_shipping'];
+        update_post_meta($post_id, 'sample_shipping', $sample_shipping);
         //$videos = $_POST['_tab_sample'];
         //$length = count($videos);
         //foreach($videos as $key=>$video){
