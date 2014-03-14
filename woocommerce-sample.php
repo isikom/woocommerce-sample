@@ -5,7 +5,7 @@
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.5.0
+ * Version: 0.6.0
  * License: GPLv2 or later
  */
  
@@ -47,8 +47,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			add_filter('woocommerce_in_cart_product_title', array( $this, 'cart_title'), 10, 3);
 			add_filter('woocommerce_cart_widget_product_title', array( $this, 'cart_widget_product_title'), 10, 2);
 			add_filter('woocommerce_cart_item_quantity', array( $this, 'cart_item_quantity'), 10, 2);
-			add_filter('woocommerce_shipping_free_shipping_is_available', array( $this, 'enable_free_shipping'), 40, 1);
-			add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
+			
+			//add_filter('woocommerce_shipping_free_shipping_is_available', array( $this, 'enable_free_shipping'), 80, 1);
+			//add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
+			
 			// filter for Minimum/Maximum plugin override overriding
 			if (in_array('woocommerce-min-max-quantities/min-max-quantities.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 				add_filter('wc_min_max_quantity_minimum_allowed_quantity', array($this, 'minimum_quantity'), 10, 4 );
@@ -78,19 +80,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 		// end filter for Mimimum/Maximum plugin overriding
 
       function enable_free_shipping($is_available){
-      	      $is_available = true;
-      	      return $is_available;
+      		error_log('ENABLE FREE SHIPPING');
+      		//$is_available = true;
+      		$is_available = false;
+      		return $is_available;
       }
 
       function free_shipping_filter( $available_methods )
       {
-      	      //var_dump( $available_methods );
-      	      // remove standard shipping option
-    	      // var_dump( get_option('active_plugins') );
-      	      
-      	      if ( isset( $available_methods['free_shipping'] ) AND isset( $available_methods['flat_rate'] ) )
-      	      	      unset( $available_methods['flat_rate'] );
-      	      return $available_methods;
+      		error_log('FREE SHIPPING FILTER');
+			//var_dump( $available_methods );
+			// remove standard shipping option
+			// var_dump( get_option('active_plugins') );
+  			error_log(serialize( $available_methods ));
+			if ( isset( $available_methods['free_shipping'] ) AND isset( $available_methods['flat_rate'] ) )
+				unset( $available_methods['flat_rate'] );
+			return $available_methods;
       }
 
       function cart_item_quantity ($product_quantity, $cart_item_key){

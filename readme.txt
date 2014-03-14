@@ -42,6 +42,9 @@ The manual installation method involves downloading our plugin and uploading it 
 
 == Changelog ==
 
+= 0.6.0 - 02/03/2014 =
+* sample price settings works fine
+
 = 0.5.0 - 02/03/2014 =
 * Add Localization
 * Added file .POT and italian translation
