@@ -42,7 +42,10 @@ The manual installation method involves downloading our plugin and uploading it 
 
 == Changelog ==
 
-= 0.6.0 - 02/03/2014 =
+= 0.7.0 - 17/03/2014 =
+* sample shipping settings works fine (options available are default or free shipping, custom shipping cost is in todo list)
+
+= 0.6.0 - 12/03/2014 =
 * sample price settings works fine
 
 = 0.5.0 - 02/03/2014 =
