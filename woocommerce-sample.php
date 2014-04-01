@@ -5,7 +5,7 @@
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.7.0
+ * Version: 0.7.1
  * License: GPLv2 or later
  */
  
@@ -81,15 +81,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 		function enable_free_shipping($is_available){
       		global $woocommerce;
-      		error_log('ENABLE FREE SHIPPING');
 			if ( sizeof( $woocommerce->cart->get_cart() ) > 0 ) {
 				$check = true;
 
 				foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item){
 					if ($cart_item['sample']){
 						$sample_shipping_mode = get_post_meta($cart_item['product_id'], 'sample_shipping_mode', true);
-      					error_log('$sample_shipping_mode');
-      					error_log($sample_shipping_mode);
 						if ($sample_shipping_mode !== 'free'){
 							$check = false;
 							break;							
@@ -104,27 +101,29 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				}
 
 				if ($check === true){
-	      			error_log('RETURN TRUE');
 					return true;
 				}else{
-      				error_log('RETURN THE SAME 1');
 					return $is_available;
 				}
 			}else{
-      			error_log('RETURN THE SAME 2');
 				return $is_available;
 			}
       }
 
       function free_shipping_filter( $available_methods )
       {
-      		error_log('FREE SHIPPING FILTER');
-			//var_dump( $available_methods );
-			// remove standard shipping option
-			// var_dump( get_option('active_plugins') );
-  			error_log(serialize( $available_methods ));
-			if ( isset( $available_methods['free_shipping'] ) AND isset( $available_methods['flat_rate'] ) )
-				unset( $available_methods['flat_rate'] );
+			if ( isset( $available_methods['free_shipping'] ) ) :
+				// Get Free Shipping array into a new array
+				$freeshipping = array();
+				$freeshipping = $available_methods['free_shipping'];
+		 
+				// Empty the $available_methods array
+				unset( $available_methods );
+		 
+				// Add Free Shipping back into $avaialble_methods
+				$available_methods = array();
+                $available_methods['free_shipping'] = $freeshipping;
+			endif;
 			return $available_methods;
       }
 
@@ -175,58 +174,26 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       
       function get_item_data($item_data, $cart_item){
       	      global $cart_item_key;
-      	      
-      	      //error_log("#################### get_item_data ####################");
-      	      //error_log(serialize($cart_item_key));
-			  //error_log("#######################################################");
-      	      //error_log(serialize($item_data));
-			  //error_log("#######################################################");
-      	      //error_log(serialize($cart_item));
-			  //error_log("#######################################################");
-      	      if ($cart_item['sample']){
-      	      	      error_log('SAMPLE TRUE');
-      	      }else{
-      	      	      error_log('SAMPLE FALSE');
-      	      }
-			  //error_log("#######################################################");
-			  //error_log(serialize($cart_item['data']));
-			  //error_log("#######################################################");
-			  //error_log("PRICE " . $cart_item['data']->price);
-			  //error_log("REGULAR PRICE " . $cart_item['data']->regular_price);
-			  //error_log("SALE PRICE " . $cart_item['data']->sale_price);
-			  //error_log("#######################################################");
+       	      //if ($cart_item['sample']){
+      	      //	      error_log('SAMPLE TRUE');
+      	      //}else{
+      	      //	      error_log('SAMPLE FALSE');
+      	      //}
       	      return $item_data;
       }
       
       function add_sample_to_cart_item_data ($cart_item_data, $product_id, $variation_id){
-      	      //error_log("##################################################################################");
-      	      //error_log("########################## add_sample_to_cart_item_data ##########################");
-      	      //error_log(serialize($cart_item_data));
-      	      //error_log("##################################################################################");
       	      if (get_post_meta($product_id, 'sample_enamble') && $_REQUEST['sample']){
-      	      		error_log('is a sample');
 					$cart_item_data['sample'] = true;
 					$cart_item_data['unique_key'] = md5($product_id . 'sample');
-      	      }else{
-      	      		error_log('is not a sample');
       	      }
-      	      //error_log("##################################################################################");
-      	      //error_log(serialize($cart_item_data));
-      	      //error_log("##################################################################################");
-      	      //error_log("##################################################################################");
       	      return $cart_item_data;
       }
 
 	function add_sample_to_cart_item ($cart_item, $cart_item_key){
-		//error_log("++++++++++++++++++++++++++++ add_sample_to_cart_item +++++++++++++++++++++++++++++");
 		if ($cart_item['sample'] === true){
-			//error_log('e\' un campione');
-			//error_log("PRICE " . $cart_item['data']->price);
 			$cart_item['data']->price = 0;
-		}else{
-			//error_log('non e\' un campione');
 		}
-		//error_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		return $cart_item;
 	}
 	  

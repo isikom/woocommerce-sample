@@ -42,6 +42,9 @@ The manual installation method involves downloading our plugin and uploading it 
 
 == Changelog ==
 
+= 0.7.1 - 17/03/2014 =
+* fix shipping methods - only free shipping is showed if available
+
 = 0.7.0 - 17/03/2014 =
 * sample shipping settings works fine (options available are default or free shipping, custom shipping cost is in todo list)
 
