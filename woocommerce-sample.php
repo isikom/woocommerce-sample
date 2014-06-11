@@ -5,7 +5,7 @@
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.7.1
+ * Version: 0.7.2
  * License: GPLv2 or later
  */
  
@@ -50,6 +50,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	
 			add_filter('woocommerce_shipping_free_shipping_is_available', array( $this, 'enable_free_shipping'), 40, 1);
 			add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
+
+			add_action('woocommerce_add_order_item_meta', array($this, 'add_order_item_meta'), 10, 2);
 			
 			// filter for Minimum/Maximum plugin override overriding
 			if (in_array('woocommerce-min-max-quantities/min-max-quantities.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -59,6 +61,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			}
 		}
 
+		function add_order_item_meta ($item_id, $values){
+			if ($values['sample']){
+				woocommerce_add_order_item_meta( $item_id, 'product type', 'sample');
+			}
+		}
+		
 		// filter for Minimum/Maximum plugin overriding
 		function minimum_quantity($minimum_quantity, $checking_id, $cart_item_key, $values){
 			if ($values['sample'])

@@ -2,8 +2,8 @@
 Contributors: isikom, zauker
 Tags: ecommerce, e-commerce, commerce, woothemes, wordpress ecommerce, woocommerce, sample, free sample
 Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 0.7.1
+Tested up to: 3.9.1
+Stable tag: 0.7.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,9 @@ You could enable it on WooCommerce Settings -> Shipping -> Free Shipping (as you
 3. remember to enable WooCommerce Free Shipping to use it on WooCommerce Sample Plugins
 
 == Changelog ==
+
+= 0.7.2 - 11/06/2014 =
+* added meta info to the sample item ordered
 
 = 0.7.1 - 17/03/2014 =
 * fix shipping methods - only free shipping is showed if available
