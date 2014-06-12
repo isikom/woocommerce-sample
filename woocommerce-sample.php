@@ -5,7 +5,7 @@
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.7.2
+ * Version: 0.7.3
  * License: GPLv2 or later
  */
  
@@ -59,6 +59,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				add_filter('wc_min_max_quantity_maximum_allowed_quantity', array($this, 'maximum_quantity'), 10, 4 );
 				add_filter('wc_min_max_quantity_group_of_quantity', array($this, 'group_of_quantity'), 10, 4 );			
 			}
+
+			// filter for Measurement Price Calculator plugin override overriding
+			if (in_array('woocommerce-measurement-price-calculator/woocommerce-measurement-price-calculator.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+				add_filter('wc_measurement_price_calculator_add_to_cart_validation', array($this, 'measurement_price_calculator_add_to_cart_validation'), 10, 4 );
+			}
+
+		}
+
+		function measurement_price_calculator_add_to_cart_validation ($valid, $product_id, $quantity, $measurements){
+			global $woocommerce;
+			$validation = $valid;
+			if (get_post_meta($product_id, 'sample_enamble') && $_REQUEST['sample']){
+				$woocommerce->session->set( 'wc_notices', null );
+				$validation = true;
+			}
+			return $validation;
 		}
 
 		function add_order_item_meta ($item_id, $values){
@@ -346,9 +362,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				<?php do_action('woocommerce_before_add_sample_to_cart_form'); ?>
 				<form action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="cart sample" method="post" enctype='multipart/form-data'>
 				<?php do_action('woocommerce_before_add_sample_to_cart_button'); ?>
-					<div class="single_variation_wrap" style="">      	      
-	      	      	<button type="submit" class="single_add_to_cart_button button alt single_add_sample_to_cart_button"><?php echo  __( 'Add Sample to cart', 'woosample' ); ?></button>
+					<div class="single_variation_wrap" style="">
+					<?php $btnclass = apply_filters('sample_button_class', "single_add_to_cart_button button alt single_add_sample_to_cart_button btn btn-default"); ?>
+	      	      	<button type="submit" class="<?php echo $btnclass; ?>"><?php echo  __( 'Add Sample to cart', 'woosample' ); ?></button>
 	      	        <input type="hidden" name="sample" id="sample" value="true"/>
+	      	        <input type="hidden" name="add-to-cart" id="sample_add_to_cart" value="<?php echo $product->id; ?>">
 	      	        </div>
 				<?php do_action('woocommerce_after_add_sample_to_cart_button'); ?>
 				</form>

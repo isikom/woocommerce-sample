@@ -3,7 +3,7 @@ Contributors: isikom, zauker
 Tags: ecommerce, e-commerce, commerce, woothemes, wordpress ecommerce, woocommerce, sample, free sample
 Requires at least: 3.5
 Tested up to: 3.9.1
-Stable tag: 0.7.2
+Stable tag: 0.7.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,11 @@ Manage Samples Of Your Products
 == Description ==
 
 Plugin for Wordpress woocommerce that allow add to cart sample item of a certain products
+
+Compatibility with plugins:
+
+* Min/Max Quantities
+* Measurement Price Calculator
 
 = GET INVOLVED =
 
@@ -54,6 +59,11 @@ You could enable it on WooCommerce Settings -> Shipping -> Free Shipping (as you
 3. remember to enable WooCommerce Free Shipping to use it on WooCommerce Sample Plugins
 
 == Changelog ==
+
+= 0.7.12 - 12/06/2014 =
+* added button CSS filter to add custom style
+* fix button for products with a variation
+* added filter for Measurement Price Calculator plugin
 
 = 0.7.2 - 11/06/2014 =
 * added meta info to the sample item ordered

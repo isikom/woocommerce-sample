@@ -29,5 +29,7 @@ jQuery(document).ready(function($){
 			}
 		}
 		return true;
+		//alert("come la mettiamo?");
+		//return false;
 	});
 });
