@@ -244,11 +244,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			
 			foreach ($cart_items as $cart_id_key => $cart_item){
 				if ($cart_item['unique_key'] == $unique_key){
-					$woocommerce->add_error( __( 'A sample of the same product is already present into your cart', 'woosample' ) );
+					wc_add_notice( __( 'A sample of the same product is already present into your cart', 'woosample' ), 'error' );
 					return false;
 				}
 				if ($cart_item['product_id'] == $product_id){
-					$woocommerce->add_error( __( 'You have already added this product on your cart, you can\'t add a sample of the same item', 'woosample' ) );
+					wc_add_notice( __( 'You have already added this product on your cart, you can\'t add a sample of the same item', 'woosample' ), 'error' );
 					return false;
 				}
 			}
