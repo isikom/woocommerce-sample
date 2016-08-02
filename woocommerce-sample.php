@@ -44,7 +44,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			add_filter('woocommerce_add_cart_item', array( $this, 'add_sample_to_cart_item' ), 10, 2 );
 			add_filter('woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
 			add_filter('woocommerce_get_cart_item_from_session', array( $this, 'filter_session'), 10, 3);
-			add_filter('woocommerce_in_cart_product_title', array( $this, 'cart_title'), 10, 3);
+			add_filter('woocommerce_cart_item_name', array( $this, 'cart_title'), 10, 3);
 			add_filter('woocommerce_cart_widget_product_title', array( $this, 'cart_widget_product_title'), 10, 2);
 			add_filter('woocommerce_cart_item_quantity', array( $this, 'cart_item_quantity'), 10, 2);
 	
