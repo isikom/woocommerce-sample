@@ -1,7 +1,8 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Sample\n"
-"POT-Creation-Date: 2014-03-02 19:13+0100\n"
+"POT-Creation-Date: 2016-08-05 00:16+0200\n"
 "PO-Revision-Date: 2014-03-02 19:14+0100\n"
 "Last-Translator: Michele Menciassi <m.menciassi@gmail.com>\n"
 "Language-Team: ISIKOM <info@isikom.net>\n"
@@ -9,79 +10,88 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../woocommerce-sample.php:106 ../woocommerce-sample.php:193
+#: ../woocommerce-sample.php:189 ../woocommerce-sample.php:196
+#: ../woocommerce-sample.php:280
 msgid "Sample"
 msgstr ""
 
-#: ../woocommerce-sample.php:176
+#: ../woocommerce-sample.php:263
 msgid "A sample of the same product is already present into your cart"
 msgstr ""
 
-#: ../woocommerce-sample.php:180
+#: ../woocommerce-sample.php:267
 msgid ""
 "You have already added this product on your cart, you can't add a sample of "
 "the same item"
 msgstr ""
 
-#: ../woocommerce-sample.php:209
+#: ../woocommerce-sample.php:302
 msgid "Enable sample"
 msgstr ""
 
-#: ../woocommerce-sample.php:210
+#: ../woocommerce-sample.php:303
 msgid "Enable or disable sample option for this item."
 msgstr ""
 
-#: ../woocommerce-sample.php:212
+#: ../woocommerce-sample.php:307
+msgid "Add chained products"
+msgstr ""
+
+#: ../woocommerce-sample.php:308
+msgid "Add or not chained products as sample."
+msgstr ""
+
+#: ../woocommerce-sample.php:311
 msgid "Sample Shipping"
 msgstr ""
 
-#: ../woocommerce-sample.php:215
+#: ../woocommerce-sample.php:314
 msgid "use default product shipping methods"
 msgstr ""
 
-#: ../woocommerce-sample.php:219
+#: ../woocommerce-sample.php:318
 msgid "free shipping for sample"
 msgstr ""
 
-#: ../woocommerce-sample.php:223
+#: ../woocommerce-sample.php:323
 msgid "custom fee shipping"
 msgstr ""
 
-#: ../woocommerce-sample.php:225
+#: ../woocommerce-sample.php:325
 msgid "set shipping fee"
 msgstr ""
 
-#: ../woocommerce-sample.php:229
+#: ../woocommerce-sample.php:330
 msgid "Sample price"
 msgstr ""
 
-#: ../woocommerce-sample.php:232
+#: ../woocommerce-sample.php:333
 msgid "product default price"
 msgstr ""
 
-#: ../woocommerce-sample.php:236
+#: ../woocommerce-sample.php:337
 msgid "free"
 msgstr ""
 
-#: ../woocommerce-sample.php:240
+#: ../woocommerce-sample.php:341
 msgid "custom price"
 msgstr ""
 
-#: ../woocommerce-sample.php:242
+#: ../woocommerce-sample.php:343
 msgid "set sample price"
 msgstr ""
 
-#: ../woocommerce-sample.php:284
+#: ../woocommerce-sample.php:393
 msgid "Add Sample to cart"
 msgstr ""
 
-#: ../woocommerce-sample.php:332
+#: ../woocommerce-sample.php:434
 #, php-format
 msgid ""
 "WooCommerce Sample requires <a href=\"http://www.woothemes.com/woocommerce/"

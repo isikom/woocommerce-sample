@@ -1,29 +1,30 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Sample\n"
-"POT-Creation-Date: 2014-03-02 19:14+0100\n"
-"PO-Revision-Date: 2014-03-02 19:16+0100\n"
-"Last-Translator: Michele Menciassi <m.menciassi@gmail.com>\n"
+"POT-Creation-Date: 2016-08-05 00:16+0200\n"
+"PO-Revision-Date: 2016-08-05 00:17+0200\n"
+"Last-Translator: Michele Menciassi <m.menciassi@isikom.net>\n"
 "Language-Team: ISIKOM <info@isikom.net>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../woocommerce-sample.php:106 ../woocommerce-sample.php:193
+#: ../woocommerce-sample.php:189 ../woocommerce-sample.php:196
+#: ../woocommerce-sample.php:280
 msgid "Sample"
 msgstr "Campione"
 
-#: ../woocommerce-sample.php:176
+#: ../woocommerce-sample.php:263
 msgid "A sample of the same product is already present into your cart"
 msgstr "Un campione dello stesso prodotto è già presente nel tuo carrello"
 
-#: ../woocommerce-sample.php:180
+#: ../woocommerce-sample.php:267
 msgid ""
 "You have already added this product on your cart, you can't add a sample of "
 "the same item"
@@ -31,59 +32,67 @@ msgstr ""
 "Hai già aggiunto questo prodotto al tuo carrello, non puoi richiedere un "
 "campione dello stesso articolo"
 
-#: ../woocommerce-sample.php:209
+#: ../woocommerce-sample.php:302
 msgid "Enable sample"
 msgstr "Abilita il Campione"
 
-#: ../woocommerce-sample.php:210
+#: ../woocommerce-sample.php:303
 msgid "Enable or disable sample option for this item."
 msgstr "Abilita o disabilita le opzioni per il campione per questo articolo"
 
-#: ../woocommerce-sample.php:212
+#: ../woocommerce-sample.php:307
+msgid "Add chained products"
+msgstr "Aggiungi i prodotti concatenati"
+
+#: ../woocommerce-sample.php:308
+msgid "Add or not chained products as sample."
+msgstr "Aggiungi o meno i prodotti concatenati come campione"
+
+#: ../woocommerce-sample.php:311
 msgid "Sample Shipping"
 msgstr "Trasporto del Campione"
 
-#: ../woocommerce-sample.php:215
+#: ../woocommerce-sample.php:314
 msgid "use default product shipping methods"
 msgstr "usa il metodo di trasporto impostato per il prodotto"
 
-#: ../woocommerce-sample.php:219
+#: ../woocommerce-sample.php:318
 msgid "free shipping for sample"
 msgstr "trasporto gratuito per il campione"
 
-#: ../woocommerce-sample.php:223
+#: ../woocommerce-sample.php:323
 msgid "custom fee shipping"
 msgstr "spese di trasporto personalizzate"
 
-#: ../woocommerce-sample.php:225
+#: ../woocommerce-sample.php:325
 msgid "set shipping fee"
 msgstr "imposta le spese di trasporto"
 
-#: ../woocommerce-sample.php:229
+#: ../woocommerce-sample.php:330
 msgid "Sample price"
 msgstr "Prezzo del Campione"
 
-#: ../woocommerce-sample.php:232
+#: ../woocommerce-sample.php:333
 msgid "product default price"
 msgstr "prezzo impostato nel prodotto"
 
-#: ../woocommerce-sample.php:236
+#: ../woocommerce-sample.php:337
 msgid "free"
 msgstr "gratuito"
 
-#: ../woocommerce-sample.php:240
+#: ../woocommerce-sample.php:341
 msgid "custom price"
 msgstr "prezzo personalizzato"
 
-#: ../woocommerce-sample.php:242
+#: ../woocommerce-sample.php:343
 msgid "set sample price"
 msgstr "imposta il prezzo del campione"
 
-#: ../woocommerce-sample.php:284
+#: ../woocommerce-sample.php:393
 msgid "Add Sample to cart"
 msgstr "Richiedi un Campione"
 
-#: ../woocommerce-sample.php:332
+#: ../woocommerce-sample.php:434
 #, php-format
 msgid ""
 "WooCommerce Sample requires <a href=\"http://www.woothemes.com/woocommerce/"

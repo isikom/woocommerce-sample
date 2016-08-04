@@ -2,8 +2,8 @@
 Contributors: isikom, zauker
 Tags: ecommerce, e-commerce, commerce, woothemes, wordpress ecommerce, woocommerce, sample, free sample
 Requires at least: 3.5
-Tested up to: 3.9.1
-Stable tag: 0.7.3
+Tested up to: 4.6
+Stable tag: 0.8.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,7 @@ Plugin for Wordpress woocommerce that allow add to cart sample item of a certain
 
 Compatibility with plugins:
 
+* WooCommerce Chained Products
 * Min/Max Quantities
 * Measurement Price Calculator
 
@@ -23,13 +24,6 @@ Compatibility with plugins:
 Developers can checkout and contribute to the source code on the [GitHub Repository](https://github.com/isikom/woocommerce-sample).
 
 == Installation ==
-
-= Minimum Requirements =
-
-* WordPress 3.5 or greater
-* PHP version 5.2.4 or greater
-* MySQL version 5.0 or greater
-* WooCommerce 2.0.20 or greater
 
 = Automatic installation =
 
@@ -49,16 +43,25 @@ The manual installation method involves downloading our plugin and uploading it 
 
 = Free shipping doesn't work =
 
-The "free shipping" option on Sample back end panel need that "free shipping" methods is enabled on your WooCommerce installation.
-You could enable it on WooCommerce Settings -> Shipping -> Free Shipping (as you can see on screenshot tab) 
+The "free shipping" option on Sample back end panel need that "free shipping" methods is enabled for your on your WooCommerce installation.
+You could enable it on WooCommerce -> Settings -> Shipping -> Shipping Zone -> Free Shipping.
+Make it enabled and set it available for coupon.
+(as you can see on screenshot tab)
 
 == Screenshots ==
 
 1. Front end - "Add Sample" button
 2. Back end - Sample setting on product page
 3. remember to enable WooCommerce Free Shipping to use it on WooCommerce Sample Plugins
+4. remember to set Free Shipping available for coupon
 
 == Changelog ==
+
+= 0.8.0 - 05/08/2016 =
+* added support for WooCommerce Chained Products plugin
+* update hooks and functions used by WooCommerce
+* update .pot file
+* fix CSS for admin panel 
 
 = 0.7.12 - 12/06/2014 =
 * added button CSS filter to add custom style

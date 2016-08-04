@@ -5,7 +5,7 @@
  * Description: Include Get Sample Button in products of your online store.
  * Author: Michele Menciassi
  * Author URI: https://plus.google.com/+MicheleMenciassi
- * Version: 0.7.3
+ * Version: 0.8.0
  * License: GPLv2 or later
  */
  
@@ -49,8 +49,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			add_filter('woocommerce_cart_item_quantity', array( $this, 'cart_item_quantity'), 10, 2);
 	
 			add_filter('woocommerce_shipping_free_shipping_is_available', array( $this, 'enable_free_shipping'), 40, 1);
-			add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
-
+			
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>' ) ){
+				add_filter('woocommerce_package_rates', array( $this, 'free_shipping_filter'), 10, 1);
+			}else{
+				add_filter('woocommerce_available_shipping_methods', array( $this, 'free_shipping_filter'), 10, 1);
+			}
 			add_action('woocommerce_add_order_item_meta', array($this, 'add_order_item_meta'), 10, 2);
 			
 			// filter for Minimum/Maximum plugin override overriding
@@ -65,6 +69,28 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				add_filter('wc_measurement_price_calculator_add_to_cart_validation', array($this, 'measurement_price_calculator_add_to_cart_validation'), 10, 4 );
 			}
 
+			// filter for WooCommerce Chained Products plugin override overriding
+			if (in_array('woocommerce-chained-products/woocommerce-chained-products.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+				add_action( 'wc_after_chained_add_to_cart', array( $this, 'remove_chained_products' ), 20, 6 ); 
+			}
+			
+		}
+		
+		function remove_chained_products ($chained_parent_id, $quantity, $chained_variation_id, $chained_variation_data, $chained_cart_item_data, $cart_item_key){
+			global $woocommerce;
+			$cart = $woocommerce->cart->get_cart();
+			$main_is_sample = $cart[$cart_item_key]['sample'];
+			if ($main_is_sample) {
+				$main_product_id = $cart[$cart_item_key]['product_id'];
+				if ( !get_post_meta($main_product_id, 'sample_chained_enambled', true) ) {
+					foreach ($cart as $cart_key => $cart_item) {
+						if ($cart_item['product_id'] == $chained_parent_id) {
+							$woocommerce->cart->remove_cart_item($cart_key);
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		function measurement_price_calculator_add_to_cart_validation ($valid, $product_id, $quantity, $measurements){
@@ -136,18 +162,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
       function free_shipping_filter( $available_methods )
       {
-			if ( isset( $available_methods['free_shipping'] ) ) :
-				// Get Free Shipping array into a new array
-				$freeshipping = array();
-				$freeshipping = $available_methods['free_shipping'];
-		 
-				// Empty the $available_methods array
-				unset( $available_methods );
-		 
-				// Add Free Shipping back into $avaialble_methods
-				$available_methods = array();
-                $available_methods['free_shipping'] = $freeshipping;
-			endif;
+      	  	foreach ($available_methods as $key => $method) {
+      	  		if ($method->method_id == 'free_shipping'){
+					$available_methods = array();
+					$available_methods['free_shipping:1'] = $method;
+					break;      	  			
+      	  		}
+      	  	}
 			return $available_methods;
       }
 
@@ -198,11 +219,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       
       function get_item_data($item_data, $cart_item){
       	      global $cart_item_key;
-       	      //if ($cart_item['sample']){
-      	      //	      error_log('SAMPLE TRUE');
-      	      //}else{
-      	      //	      error_log('SAMPLE FALSE');
-      	      //}
       	      return $item_data;
       }
       
@@ -270,6 +286,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 		public function product_write_panel() {
         	global $post;
 			$sample_enable = get_post_meta($post->ID, 'sample_enamble', true) ? get_post_meta($post->ID, 'sample_enamble', true) : false;
+			if (in_array('woocommerce-chained-products/woocommerce-chained-products.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+				$has_chained_products = get_post_meta($post->ID, '_chained_product_detail', true );
+			} else {
+				$has_chained_products = false;
+			}
+			$sample_chained_enambled = get_post_meta($post->ID, 'sample_chained_enambled', true) ? get_post_meta($post->ID, 'sample_chained_enambled', true) : false;
 			$sample_shipping_mode = get_post_meta($post->ID, 'sample_shipping_mode', true) ? get_post_meta($post->ID, 'sample_shipping_mode', true) : 'default';
 			$sample_shipping = get_post_meta($post->ID, 'sample_shiping', true) ? get_post_meta($post->ID, 'sample_shipping', true) : 0;
 			$sample_price_mode = get_post_meta($post->ID, 'sample_price_mode', true) ? get_post_meta($post->ID, 'sample_price_mode', true) : 'default';
@@ -280,6 +302,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					<label for="sample_enamble"><?php _e('Enable sample', 'woosample');?></label>
 					<input type="checkbox" class="checkbox" name="sample_enamble" id="sample_enamble" value="yes" <?php echo $sample_enable ? 'checked="checked"' : ''; ?>> <span class="description"><?php _e('Enable or disable sample option for this item.', 'woosample'); ?></span>
 				</p>
+			<?php if ($has_chained_products) { ?>
+				<p class="form-field sample_chained_enambled_field ">
+					<label for="sample_chained_enambled"><?php _e('Add chained products', 'woosample');?></label>
+					<input type="checkbox" class="checkbox" name="sample_chained_enambled" id="sample_chained_enambled" value="yes" <?php echo $sample_chained_enambled ? 'checked="checked"' : ''; ?>> <span class="description"><?php _e('Add or not chained products as sample.', 'woosample'); ?></span>
+				</p>
+			<?php } ?>
 				<legend><?php _e('Sample Shipping', 'woosample'); ?></legend>
 				<div class="options_group">
 					<input class="radio" id="sample_shipping_default" type="radio" value="default" name="sample_shipping_mode" <?php echo $sample_shipping_mode == 'default' ? 'checked="checked"' : ''; ?>>
@@ -336,7 +364,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }else{
           update_post_meta($post_id, 'sample_enamble', true);
         }
-		
+        $sample_chained_enambled = $_POST['sample_chained_enambled'];
+        if (empty($sample_chained_enambled)) {
+          delete_post_meta($post_id, 'sample_chained_enambled');
+        }else{
+          update_post_meta($post_id, 'sample_chained_enambled', true);
+        }		
 		$sample_price_mode = $_POST['sample_price_mode'];
         update_post_meta($post_id, 'sample_price_mode', $sample_price_mode);
 		$sample_price = $_POST['sample_price'];
@@ -345,13 +378,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         update_post_meta($post_id, 'sample_shipping_mode', $sample_shipping_mode);
 		$sample_shipping = $_POST['sample_shipping'];
         update_post_meta($post_id, 'sample_shipping', $sample_shipping);
-        //$videos = $_POST['_tab_sample'];
-        //$length = count($videos);
-        //foreach($videos as $key=>$video){
-        //  if(!empty($video)) update_post_meta($post_id, 'wo_di_video_product'.$key, stripslashes($video));
-        //  else delete_post_meta($post_id, 'wo_di_video_product'.$key);
-        //}
-        
       }
 
 		public function product_sample_button() {

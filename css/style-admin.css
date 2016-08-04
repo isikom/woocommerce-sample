@@ -1,8 +1,5 @@
-#woocommerce-product-data ul.product_data_tabs li a.added_sample{
- 	background: url(../images/sample-icon.png) no-repeat 6px 5px transparent;
- 	line-height:1em;
-	padding:5px 5px 5px 28px;
-	text-shadow:0 1px 1px #FFFFFF;
+#woocommerce-product-data ul.product_data_tabs li a.added_sample:before{
+	content: "\f312";
 }
 
 input.radio {
