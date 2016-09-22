@@ -2,12 +2,12 @@
 Contributors: isikom, zauker
 Tags: ecommerce, e-commerce, commerce, woothemes, wordpress ecommerce, woocommerce, sample, free sample
 Requires at least: 3.5
-Tested up to: 4.6
-Stable tag: 0.8.0
+Tested up to: 4.6.1
+Stable tag: 0.8.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Manage Samples Of Your Products 
+Manage Samples Of Your Products
 
 == Description ==
 
@@ -48,6 +48,16 @@ You could enable it on WooCommerce -> Settings -> Shipping -> Shipping Zone -> F
 Make it enabled and set it available for coupon.
 (as you can see on screenshot tab)
 
+= How to change sample button text? =
+
+You can add filter to functions.php to achieve that. Sample code:
+wc_sample_button_text
+
+`add_filter( 'wc_sample_button_text', 'custom_wc_sample_button_text' );
+function custom_wc_sample_button_text( $button_text ) {
+	return 'Add A Free Sample To Cart';
+}`
+
 == Screenshots ==
 
 1. Front end - "Add Sample" button
@@ -57,11 +67,15 @@ Make it enabled and set it available for coupon.
 
 == Changelog ==
 
+= 0.8.0.1 - 22.09.2016 =
+* added filter `wc_sample_button_text` to change sample button text
+* added `sample` as product type in cart content
+
 = 0.8.0 - 05/08/2016 =
 * added support for WooCommerce Chained Products plugin
 * update hooks and functions used by WooCommerce
 * update .pot file
-* fix CSS for admin panel 
+* fix CSS for admin panel
 
 = 0.7.12 - 12/06/2014 =
 * added button CSS filter to add custom style
