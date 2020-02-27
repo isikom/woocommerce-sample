@@ -202,14 +202,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       	      if ($value['sample']){
       	      	      $cart_content['sample'] = true;
       	      	      $cart_content['unique_key'] = $value['unique_key'];
-      	      	      //$cart_content['data']->price = 0;
+      	      	      //$cart_content['data']->set_price( '0' );
 					  $product_id = $cart_content['product_id'];
 					  $sample_price_mode = get_post_meta($product_id, 'sample_price_mode', true) ? get_post_meta($product_id, 'sample_price_mode', true) : 'default';
 					  $sample_price = get_post_meta($product_id, 'sample_price', true) ? get_post_meta($product_id, 'sample_price', true) : 0;
 					  if ($sample_price_mode === 'custom'){
-					  	$cart_content['data']->price = $sample_price;
+					  	$cart_content['data']->set_price( $sample_price );
 					  }else if ($sample_price_mode === 'free'){
-					  	$cart_content['data']->price = 0;
+					  	$cart_content['data']->set_price( '0' );
 					  }else{
 					  	//default
 					  }
@@ -232,7 +232,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 	function add_sample_to_cart_item ($cart_item, $cart_item_key){
 		if ($cart_item['sample'] === true){
-			$cart_item['data']->price = 0;
+			$cart_item['data']->set_price( '0' );
 		}
 		return $cart_item;
 	}
